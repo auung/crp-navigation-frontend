@@ -1,7 +1,12 @@
+import Map from "../Map/Map";
+import { Wrapper } from "./App.styles";
+
 const App = () => {
   return (
-    <div>Test App</div>
+    <Wrapper>
+      <Map />
+    </Wrapper>
   );
 }
- 
+
 export default App;
