@@ -1,16 +1,15 @@
 import { useState } from "react";
 import { Btn, Wrapper } from "./Map.styles";
-import { MapContainer, TileLayer, Polyline } from 'react-leaflet';
+import { MapContainer, TileLayer } from 'react-leaflet';
 import LocationMarker from "../LocationMarker/LocationMarker";
 import 'leaflet/dist/leaflet.css';
-
-
 import useFetch from "../../hooks/useFetch";
+import TrafficLine from "../TrafficLine/TrafficLine";
 
 const Map = () => {
   const url = import.meta.env.VITE_API;
 
-  const { data: intersections } = useFetch(url, "GET");
+  const { data: road_segments } = useFetch(url, "GET");
   
   const [center, setCenter] = useState([ 16.778152, 96.150379 ])
   const ZOOM_LEVEL = 15;
@@ -25,13 +24,6 @@ const Map = () => {
       setStart(id);
     }
   }
-
-  // useEffect(() => {
-  //   if (intersections) {
-  //     console.log(intersections);
-  //   }
-    
-  // }, [intersections]);
 
   const { data: route, fetchData } = useFetch(`${url}/route`, "POST");
   
@@ -49,7 +41,7 @@ const Map = () => {
     <Wrapper>
       <MapContainer center={center} zoom={ZOOM_LEVEL}>
         <TileLayer attribution='<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>' url="https://api.maptiler.com/maps/basic-v2/256/{z}/{x}/{y}.png?key=x0t5PB7g3FhKpbSzU9l7" />
-        { intersections && intersections.map(intersection => {
+        {/* intersections && intersections.map(intersection => {
           const id = parseInt(intersection["id"]) + 1;
           const y = intersection["geometry"]["coordinates"][0];
           const x = intersection["geometry"]["coordinates"][1];
@@ -63,8 +55,14 @@ const Map = () => {
               type={type}
             ></LocationMarker>
           )
-        })}
-        { route && <Polyline pathOptions={ {color: "red"} } positions={route} /> }
+        }) */}
+
+        { road_segments && road_segments.map(road_segment => {
+          
+          return (
+            <TrafficLine key={road_segment.id} road_segment={road_segment} />
+          )
+        }) }
       </MapContainer>
       <Btn onClick={handleFindRoute}>Find Route</Btn>
     </Wrapper>
