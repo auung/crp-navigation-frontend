@@ -1,8 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 
 const useFetch = () => {
-	const [url, setUrl] = useState();
-	const [options, setOptions] = useState({});
+	const [fetchParams, setFetchParams] = useState([]);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -11,9 +10,8 @@ const useFetch = () => {
     setLoading(true);
     setError(null);
 
-    fetch(url, options)
+    fetch(...fetchParams)
       .then(response => {
-				console.log("fetched to " + url);
 				if (!response.ok) {
 					throw Error("Could not fetch data.");
 				}
@@ -23,7 +21,6 @@ const useFetch = () => {
 				setData(data);
 				setLoading(false);
 				setError(null);
-				console.log("fetched");
 			})
 			.catch(err => {
 				if (err.name === "AbortError") {
@@ -35,17 +32,17 @@ const useFetch = () => {
 			})
 
   // eslint-disable-next-line
-  }, [url])
+  }, [fetchParams])
 
 	useEffect(() => {
-		if (url) {
+		if (fetchParams) {
 			fetchData();
 		}
 
 	// eslint-disable-next-line
-	}, [url])
+	}, [fetchParams])
 
-	return { data, loading, error, setUrl, setOptions };
+	return { data, loading, error, setFetchParams };
 };
 
 export default useFetch;

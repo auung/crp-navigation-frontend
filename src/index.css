@@ -38,6 +38,11 @@ body {
   color: gray;
 }
 
+.custom-marker.default {
+  background-color: gray;
+  border-radius: 50%;
+}
+
 .custom-marker.start .material-symbols-outlined,
 .custom-marker.end .material-symbols-outlined {
   font-variation-settings:

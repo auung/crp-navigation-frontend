@@ -6,10 +6,10 @@ const LocationMarker = ({ id, position, handleMarkerClick, type }) => {
 
   const defaultMarker = () => {
     return L.divIcon({
-      className: `custom-marker`,
-      html: `<span class="material-symbols-outlined">location_on</span>`,
+      className: `custom-marker default`,
+      html: `<div></div>`,
       iconSize: [16, 16],
-      iconAnchor: [12, 20]
+      iconAnchor: [8, 8]
     });
   }
 
