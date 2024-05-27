@@ -1,18 +1,19 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
-const useFetch = (url, method) => {
+const useFetch = () => {
+	const [url, setUrl] = useState();
+	const [options, setOptions] = useState({});
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchData = useCallback((options) => {
+  const fetchData = useCallback(() => {
     setLoading(true);
     setError(null);
 
-    const abortCont = new AbortController();
-
-    fetch(url, { method, ...options })
+    fetch(url, options)
       .then(response => {
+				console.log("fetched to " + url);
 				if (!response.ok) {
 					throw Error("Could not fetch data.");
 				}
@@ -32,18 +33,19 @@ const useFetch = (url, method) => {
 					setError(err.message);
 				}
 			})
-		return () => abortCont.abort();
 
   // eslint-disable-next-line
-  }, [])
+  }, [url])
 
-  useEffect(() => {
-    if (method === 'GET') {
-      fetchData();
-    }
-  }, [fetchData,method])
+	useEffect(() => {
+		if (url) {
+			fetchData();
+		}
 
-  return { data, loading, error, fetchData };
+	// eslint-disable-next-line
+	}, [url])
+
+	return { data, loading, error, setUrl, setOptions };
 };
 
 export default useFetch;

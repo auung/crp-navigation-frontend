@@ -15,11 +15,11 @@ const CustomPolyline = ({ positions, offset, color }) => {
   return null;
 }
 
-const TrafficLine = ({ road_segment }) => {
-  const color = road_segment.traffic_density < 0.33 ? "#53c976" : road_segment.traffic_density > 0.33 && road_segment.traffic_density < 0.66 ? "#e8ed45" : "#f21d1d";
+const TrafficLine = ({ roadSegment }) => {
+  const color = roadSegment.traffic_density < 0.33 ? "#53c976" : roadSegment.traffic_density > 0.33 && roadSegment.traffic_density < 0.66 ? "#e8ed45" : "#f21d1d";
 
   return (
-    <CustomPolyline color={color} positions={road_segment.nodes} offset={2} />
+    <CustomPolyline color={color} positions={roadSegment.nodes} offset={2} />
   );
 }
  

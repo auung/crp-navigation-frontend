@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  width: 100vw;
+  color: white;
   height: 100vh;
-  background-color: #323235;
-  
+  width: 80%;
+  margin: auto;
 `;
