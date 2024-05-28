@@ -1,5 +1,6 @@
 import L from "leaflet";
 import "leaflet-polylineoffset";
+import "leaflet.polyline.snakeanim"
 import { useEffect } from "react";
 import { useMap } from "react-leaflet";
 
@@ -7,22 +8,22 @@ import { useMap } from "react-leaflet";
 const CustomPolyline = ({ positions, offset, color }) => {
   const map = useMap();
   useEffect(() => {
-    const polyline = L.polyline(positions, { color })
+    const polyline = L.polyline(positions, { color: "blue", snakingSpeed: 700 })
     polyline.setOffset(offset)
-    polyline.addTo(map);
+    polyline.addTo(map).snakeIn();
 
     return () => map.removeLayer(polyline);
   }, [color, map, offset, positions])
-  
+
   return null;
 }
 
-const TrafficLine = ({ roadSegment }) => {
-  const color = roadSegment.traffic_density < 0.33 ? "#53c976" : roadSegment.traffic_density > 0.33 && roadSegment.traffic_density < 0.66 ? "#e8ed45" : "#f21d1d";
+const RouteLine = ({ positions }) => {
+  const color = "blue";
 
   return (
-    <CustomPolyline color={color} positions={roadSegment.nodes} offset={2} />
+    <CustomPolyline color={color} positions={positions} offset={2} />
   );
 }
  
-export default TrafficLine;
+export default RouteLine;

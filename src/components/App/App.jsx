@@ -9,7 +9,7 @@ import useMapContext from "../../hooks/useMapContext";
 const App = () => {
   const url = import.meta.env.VITE_API;
   const { data, setFetchParams } = useFetch();
-  const { start, end, dispatch } = useMapContext();
+  const { markers, start, end, route, dispatch } = useMapContext();
 
   const [pageMode, setPageMode] = useState("traffic");
   const [selectMode, setSelectMode] = useState();
@@ -48,12 +48,22 @@ const App = () => {
       if (pageMode === "traffic") {
         dispatch({ type: "traffic", payload: data });
       } else if (pageMode === "navigation") {
-        dispatch({ type: "markers", payload: data });
+        if (!markers) {
+          dispatch({ type: "markers", payload: data });
+        } else {
+          dispatch({ type: "route", payload: data })
+        }
       }
     }
     
   // eslint-disable-next-line
   }, [data]);
+
+  useEffect(() => {
+    if (route) {
+      console.log(route);
+    }
+  }, [route]);
 
   return (
     <Wrapper>

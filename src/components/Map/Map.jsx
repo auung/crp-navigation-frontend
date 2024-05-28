@@ -4,6 +4,7 @@ import LocationMarker from "../LocationMarker/LocationMarker";
 import 'leaflet/dist/leaflet.css';
 import TrafficLine from "../TrafficLine/TrafficLine";
 import useMapContext from "../../hooks/useMapContext";
+import RouteLine from "../RouteLine/RouteLine";
 
 // eslint-disable-next-line react/prop-types
 const Map = ({ mode, handleMarkerClick }) => {
@@ -37,12 +38,20 @@ const Map = ({ mode, handleMarkerClick }) => {
           )
         }) }
 
-        { mode === "traffic" && roadSegments && roadSegments.map(roadSegment => {
+        { roadSegments && roadSegments.map(roadSegment => {
           return (
             <TrafficLine key={roadSegment.id} roadSegment={roadSegment} />
           )
         }) }
-      </MapContainer>    
+{/* 
+        { mode === "navigation" && route && route.map(latlong => {
+          return (
+            <RouteLine key={route.indexOf(latlong)} positions={latlong} />
+          )
+        })} */}
+
+        { mode === "navigation" && route && <RouteLine positions={route} /> }
+      </MapContainer>
     </Wrapper>
   );
 }
