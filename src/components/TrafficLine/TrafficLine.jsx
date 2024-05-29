@@ -7,13 +7,13 @@ import { useMap } from "react-leaflet";
 const CustomPolyline = ({ positions, offset, color }) => {
   const map = useMap();
   useEffect(() => {
-    const polyline = L.polyline(positions, { color })
-    polyline.setOffset(offset)
+    const polyline = L.polyline(positions, { color });
+    polyline.setOffset(offset);
     polyline.addTo(map);
 
     return () => map.removeLayer(polyline);
   }, [color, map, offset, positions])
-  
+
   return null;
 }
 

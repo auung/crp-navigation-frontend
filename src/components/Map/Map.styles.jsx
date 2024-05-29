@@ -1,13 +1,12 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  width: 800px;
-  height: 500px;
+  height: 75%;
   background-color: white;
   margin: auto;
 
   > div {
-    height: 500px;
+    height: 100%;
   }
 `;
 

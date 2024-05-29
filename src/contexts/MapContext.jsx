@@ -34,6 +34,15 @@ export const mapReducer = (state, action) => {
         ...state,
         route: action.payload
       }
+
+    case "cleanUp":
+      return {
+        traffic: null,
+        markers: null,
+        start: null,
+        end: null,
+        route: null
+      }
   }
 }
 

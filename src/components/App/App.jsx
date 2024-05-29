@@ -9,7 +9,7 @@ import useMapContext from "../../hooks/useMapContext";
 const App = () => {
   const url = import.meta.env.VITE_API;
   const { data, setFetchParams } = useFetch();
-  const { markers, start, end, route, dispatch } = useMapContext();
+  const { markers, start, end, dispatch } = useMapContext();
 
   const [pageMode, setPageMode] = useState("traffic");
   const [selectMode, setSelectMode] = useState();
@@ -24,13 +24,15 @@ const App = () => {
   }
 
   function handleFindRoute() {
-    setFetchParams([url + "navigate", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify([start, end])
-    }])
+    if (start && end) {
+      setFetchParams([url + "navigate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify([start, end])
+      }])
+    }
   }
 
   useEffect(() => {
@@ -40,6 +42,7 @@ const App = () => {
       setFetchParams([url + "navigate"]);
     }
     
+    return () => dispatch({ type: "cleanUp" })
   // eslint-disable-next-line
   }, [pageMode]);
 
@@ -59,16 +62,10 @@ const App = () => {
   // eslint-disable-next-line
   }, [data]);
 
-  useEffect(() => {
-    if (route) {
-      console.log(route);
-    }
-  }, [route]);
-
   return (
     <Wrapper>
       <Navbar mode={pageMode} setMode={setPageMode} />
-      <Action selectMode={selectMode} setSelectMode={setSelectMode} priority={priority} setPriority={setPriority} handleFindRoute={handleFindRoute} />
+      { pageMode === "navigation" && <Action selectMode={selectMode} setSelectMode={setSelectMode} priority={priority} setPriority={setPriority} handleFindRoute={handleFindRoute} /> }
       <Map mode={pageMode} selectMode={selectMode} handleMarkerClick={handleMarkerClick} />
     </Wrapper>
   )

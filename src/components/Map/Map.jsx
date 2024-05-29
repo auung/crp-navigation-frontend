@@ -22,7 +22,7 @@ const Map = ({ mode, handleMarkerClick }) => {
 
   return (
     <Wrapper>
-      <MapContainer center={CENTER} zoom={ZOOM_LEVEL}>
+      <MapContainer center={CENTER} zoom={ZOOM_LEVEL} className="map-container">
         <TileLayer attribution='<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>' url="https://api.maptiler.com/maps/basic-v2/256/{z}/{x}/{y}.png?key=x0t5PB7g3FhKpbSzU9l7" />
         { mode === "navigation" && intersections && intersections.map(intersection => {
           const id = intersection.id;
@@ -38,17 +38,11 @@ const Map = ({ mode, handleMarkerClick }) => {
           )
         }) }
 
-        { roadSegments && roadSegments.map(roadSegment => {
+        { mode === "traffic" && roadSegments && roadSegments.map(roadSegment => {
           return (
             <TrafficLine key={roadSegment.id} roadSegment={roadSegment} />
           )
         }) }
-{/* 
-        { mode === "navigation" && route && route.map(latlong => {
-          return (
-            <RouteLine key={route.indexOf(latlong)} positions={latlong} />
-          )
-        })} */}
 
         { mode === "navigation" && route && <RouteLine positions={route} /> }
       </MapContainer>

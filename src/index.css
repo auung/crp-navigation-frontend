@@ -34,6 +34,10 @@ body {
   background-color: #323235;
 }
 
+/* .map-container {
+  width: 100%;
+} */
+
 .custom-marker {
   color: gray;
 }
