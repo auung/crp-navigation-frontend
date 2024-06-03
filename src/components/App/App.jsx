@@ -8,8 +8,8 @@ import useMapContext from "../../hooks/useMapContext";
 
 const App = () => {
   const url = import.meta.env.VITE_API;
-  const { data, setFetchParams } = useFetch();
-  const { markers, start, end, dispatch } = useMapContext();
+  const { data, loading, setFetchParams } = useFetch();
+  const { markers, start, end, route, dispatch } = useMapContext();
 
   const [pageMode, setPageMode] = useState("traffic");
   const [selectMode, setSelectMode] = useState();
@@ -65,8 +65,8 @@ const App = () => {
   return (
     <Wrapper>
       <Navbar mode={pageMode} setMode={setPageMode} />
-      { pageMode === "navigation" && <Action selectMode={selectMode} setSelectMode={setSelectMode} priority={priority} setPriority={setPriority} handleFindRoute={handleFindRoute} /> }
-      <Map mode={pageMode} selectMode={selectMode} handleMarkerClick={handleMarkerClick} />
+      { pageMode === "navigation" && <Action selectMode={selectMode} setSelectMode={setSelectMode} priority={priority} setPriority={setPriority} handleFindRoute={handleFindRoute} distance={route?.distance}/> }
+      <Map loading={loading} mode={pageMode} handleMarkerClick={handleMarkerClick} />
     </Wrapper>
   )
 }

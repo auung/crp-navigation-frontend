@@ -1,13 +1,14 @@
-import { Wrapper } from "./Map.styles";
+import { Loader, LoadingContainer, Wrapper } from "./Map.styles";
 import { MapContainer, TileLayer } from 'react-leaflet';
 import LocationMarker from "../LocationMarker/LocationMarker";
 import 'leaflet/dist/leaflet.css';
 import TrafficLine from "../TrafficLine/TrafficLine";
 import useMapContext from "../../hooks/useMapContext";
 import RouteLine from "../RouteLine/RouteLine";
+import { useEffect } from "react";
 
 // eslint-disable-next-line react/prop-types
-const Map = ({ mode, handleMarkerClick }) => {
+const Map = ({ loading, mode, handleMarkerClick }) => {
 
   const {
     traffic: roadSegments,
@@ -16,6 +17,12 @@ const Map = ({ mode, handleMarkerClick }) => {
     start,
     end
   } = useMapContext();
+
+  useEffect(() => {
+    if (route) {
+      console.log(route);
+    }
+  }, [route]);
 
   const CENTER = [ 16.778152, 96.150379 ];
   const ZOOM_LEVEL = 15;
@@ -44,8 +51,17 @@ const Map = ({ mode, handleMarkerClick }) => {
           )
         }) }
 
-        { mode === "navigation" && route && <RouteLine positions={route} /> }
+        { mode === "navigation" && route && <RouteLine route={route} /> }
+        {/* { mode === "navigation" && route && route.route.map((positions, i) => {
+          return (
+            <RouteLine key={i} route={positions} />
+          )
+        }) } */}
       </MapContainer>
+      { loading && 
+        <LoadingContainer>
+          <Loader />
+        </LoadingContainer> }
     </Wrapper>
   );
 }
