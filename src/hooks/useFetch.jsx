@@ -7,6 +7,7 @@ const useFetch = (url, fetchNow = true) => {
   const [error, setError] = useState(null);
 
   const fetchData = useCallback((options = {}) => {
+		setData(null);
     setLoading(true);
     setError(null);
 
@@ -36,6 +37,12 @@ const useFetch = (url, fetchNow = true) => {
 	useEffect(() => {
 		if (fetchNow) {
 			fetchData();
+		}
+
+		return () => {
+			setData(null);
+			setLoading(false);
+			setError(null);
 		}
 
 	// eslint-disable-next-line react-hooks/exhaustive-deps

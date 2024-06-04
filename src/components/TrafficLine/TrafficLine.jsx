@@ -18,7 +18,7 @@ const CustomPolyline = ({ positions, offset, color }) => {
 }
 
 const TrafficLine = ({ roadSegment }) => {
-  const color = roadSegment.traffic_density < 0.35 ? "#53c976" : roadSegment.traffic_density > 0.33 && roadSegment.traffic_density < 0.75 ? "#e8ed45" : "#f21d1d";
+  const color = roadSegment.traffic_density < 0.35 ? "#53c976" : roadSegment.traffic_density >= 0.35 && roadSegment.traffic_density < 0.75 ? "#e8ed45" : "#f21d1d";
 
   return (
     <CustomPolyline color={color} positions={roadSegment.nodes} offset={2} />

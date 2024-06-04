@@ -6,7 +6,9 @@ import TrafficLine from "../TrafficLine/TrafficLine";
 import RouteLine from "../RouteLine/RouteLine";
 import useMapContext from "../../hooks/useMapContext";
 
-const Map = ({ roadSegments, intersections, routes, route, loading, handleMarkerClick }) => {
+const Map = ({ intersections, roadSegments, routes, route, loading, handleMarkerClick, counter }) => {
+  // const url = import.meta.env.VITE_API;
+  // const { data: roadSegments, loading: intLoading, error: intError, fetchData } = useFetch(url);
   const CENTER = [ 16.778152, 96.150379 ];
   const ZOOM_LEVEL = 15;
 
@@ -50,6 +52,8 @@ const Map = ({ roadSegments, intersections, routes, route, loading, handleMarker
           <Loader />
         </LoadingContainer>
       }
+
+      { counter }
     </Wrapper>
   );
 }
