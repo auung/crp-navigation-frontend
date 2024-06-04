@@ -1,16 +1,17 @@
-import { NavBtn, Wrapper } from "./Navbar.styles";
+import { NavLink } from "react-router-dom";
+import { Wrapper } from "./Navbar.styles";
 
 // eslint-disable-next-line react/prop-types
-const Navbar = ({ mode, setMode }) => {
+const Navbar = () => {
   return (
     <Wrapper>
       <h1>Navigation App</h1>
       <ul>
         <li>
-          <NavBtn onClick={() => setMode("traffic")} $active={mode === "traffic"}>Traffic Mode</NavBtn>
+          <NavLink to="/traffic">Traffic Mode</NavLink>
         </li>
         <li>
-          <NavBtn onClick={() => setMode("navigation")} $active={mode === "navigation"}>Navigation Mode</NavBtn>
+          <NavLink to="/navigation">Navigation Mode</NavLink>
         </li>
       </ul>
     </Wrapper>

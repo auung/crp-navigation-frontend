@@ -14,17 +14,20 @@ export const Wrapper = styled.nav`
   ul {
     display: flex;
     gap: 3em;
-  }
-`;
 
-export const NavBtn = styled.button`
-  color: ${props => props.$active ? "white" : "lightgray"};
-  font-size: 1rem;
-  padding: 0.75em 0;
-  pointer-events: ${props => props.$active ? "none" : ""};
-  transition: text-decoration 200ms ease-in-out;
+    a {
+      color: lightgray;
+      padding: 0.75em 0;
+      transition: text-decoration 200ms ease-in-out;
 
-  &:hover {
-    text-decoration: ${props => props.$active ? "" : "underline"};
+      &.active {
+        color: white;
+        pointer-events: none;
+      }
+
+      &:not(.active):hover {
+        text-decoration: underline;
+      }
+    }
   }
 `;
