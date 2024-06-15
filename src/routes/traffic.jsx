@@ -2,7 +2,7 @@ import useFetch from "../hooks/useFetch";
 import Map from "../components/Map/Map";
 
 const Traffic = () => {
-  const url = import.meta.env.VITE_API;
+  const url = import.meta.env.VITE_API + "traffic";
   const { data: traffic, loading, error } = useFetch(url);
 
   return (
