@@ -5,25 +5,31 @@ import { useEffect } from "react";
 import { useMap } from "react-leaflet";
 
 /* eslint-disable react/prop-types */
-const CustomPolyline = ({ positions, offset, color, distance }) => {
+const CustomPolyline = ({ best, offset, route, visual }) => {
   const map = useMap();
   useEffect(() => {
-    const polyline = L.polyline(positions, { color: "blue", snakingSpeed: 700 })
+    const polyline = L.polyline(route.route, {
+      color: best ? "red" : "blue",
+      snakingSpeed: visual ? 2000 : 700,
+      weight: best ? 5 : 2
+    })
+
     polyline.setOffset(offset)
-    polyline.bindTooltip(distance, {permanent: true, direction: "top"}).openTooltip()
+    if (route.distance) {
+      polyline.bindTooltip(route.distance, {permanent: true, direction: "top"}).openTooltip()
+    }
     polyline.addTo(map).snakeIn();
 
     return () => map.removeLayer(polyline);
-  }, [color, map, offset, positions, distance])
+  }, [map, offset, visual, best, route])
 
   return null;
 }
 
-const RouteLine = ({ route }) => {
-  const color = "blue";
+const RouteLine = ({ route, best, visual }) => {
 
   return (
-    <CustomPolyline color={color} positions={route.route} offset={2} distance={route.distance} />
+    <CustomPolyline best={best} offset={2} route={route} visual={visual} />
   );
 }
  

@@ -5,13 +5,13 @@ import useFetch from "../hooks/useFetch";
 import useMapContext from "../hooks/useMapContext";
 
 const Navigation = () => {
-  const TIME = 10;
+  const TIME = 30;
   const url = import.meta.env.VITE_API + "navigate";
   const { data: intersections, loading: intLoading, error: intError } = useFetch(url);
   const { data: route, loading: routeLoading, error: routeError, fetchData} = useFetch(url, false);
   const { start, end, dispatch } = useMapContext();
 
-  const [counter, setCounter] = useState(TIME);
+  const [counter, setCounter] = useState();
   const counterIntervalID = useRef(null);
   const fetchIntervalID = useRef(null);
 
@@ -46,27 +46,28 @@ const Navigation = () => {
   }
 
   function handleFindRoute() {
-    clearIntervals();
     if (start && end) { 
+      console.log(start, end);
       fetchData({
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify([start, end])
+        body: JSON.stringify([start, end, priority])
       })
     }
   }
 
   function clearIntervals() {
-    setCounter(TIME);
     clearInterval(counterIntervalID.current);
     clearInterval(fetchIntervalID.current);
   }
 
   useEffect(() => {
     clearIntervals();
+    setCounter(null);
     if (route) {
+      setCounter(TIME);
       if (!routeLoading) {
         counterIntervalID.current = setInterval(() => {
           setCounter(c => c - 1)
@@ -82,17 +83,8 @@ const Navigation = () => {
       clearIntervals();
     }
     
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // eslint-disable-next-line
   }, [route]);
-
-  useEffect(() => {
-    return () => {
-      clearInterval(counterIntervalID.current);
-      clearInterval(fetchIntervalID.current);
-    }
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <>

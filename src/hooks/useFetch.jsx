@@ -7,7 +7,6 @@ const useFetch = (url, fetchNow = true) => {
   const [error, setError] = useState(null);
 
   const fetchData = useCallback((options = {}) => {
-		setData(null);
     setLoading(true);
     setError(null);
 

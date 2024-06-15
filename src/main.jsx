@@ -10,6 +10,7 @@ import {
 import Root from "./routes/root";
 import Traffic from "./routes/traffic";
 import Navigation from "./routes/navigation";
+import Visualize from "./routes/visualize";
 
 const router = createBrowserRouter([
   {
@@ -27,15 +28,20 @@ const router = createBrowserRouter([
       {
         path: "navigation",
         element: <Navigation />,
+      },
+      {
+        path: "visualize",
+        element: <Visualize />,
       }
     ]
   }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <MapContextProvider>
       <RouterProvider router={router} />
     </MapContextProvider>
-  </React.StrictMode>,
+  // </React.StrictMode>
+  ,
 )

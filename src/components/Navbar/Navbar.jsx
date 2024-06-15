@@ -13,6 +13,9 @@ const Navbar = () => {
         <li>
           <NavLink to="/navigation">Navigation Mode</NavLink>
         </li>
+        <li>
+          <NavLink to="/visualize">Visualize</NavLink>
+        </li>
       </ul>
     </Wrapper>
   );
